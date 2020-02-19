@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressPageObject.cs" />
+    <Compile Include="FormPageObject.cs" />
     <Compile Include="NavBarPageObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
