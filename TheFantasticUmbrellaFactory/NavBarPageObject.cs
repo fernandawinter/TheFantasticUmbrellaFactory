@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
 namespace TheFantasticUmbrellaFactory
@@ -26,6 +27,11 @@ namespace TheFantasticUmbrellaFactory
 
 
             return new FormPageObject(driver);
+        }
+
+        internal FormPageObject ClickInsert()
+        {
+            throw new NotImplementedException();
         }
     }
 }

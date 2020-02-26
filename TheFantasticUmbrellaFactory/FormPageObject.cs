@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TheFantasticUmbrellaFactory
 {
-    class FormPageObject
+    public class FormPageObject
     {
         private IWebDriver driver;
         public FormPageObject(IWebDriver driver)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TheFantasticUmbrellaFactory
 {
-    class AddressPageObject
+    public class AddressPageObject
     {
         private IWebDriver driver;
         public AddressPageObject(IWebDriver driver)
