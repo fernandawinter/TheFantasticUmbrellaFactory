@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -67,30 +68,43 @@ namespace TheFantasticUmbrellaFactory
         [FindsBy(How = How.Id, Using = "save")]
         public IWebElement btnSave { get; set; }
 
+        [FindsBy(How = How.Id, Using = "message")]
+        public IWebElement textMessage { get; set; }
 
-        public void FillAddresMainForm(string zipCodMain, string addressMain, string numberMain, string cityMain, string stateMain, string foneMain, string mobileMain)
-        {
-            TextzipCodMain.SendKeys(zipCodMain);
-            TextaddressMain.SendKeys(addressMain);
-            TextNumberMain.SendKeys(numberMain);
-            TextcityMain.SendKeys(cityMain);
-            TextstateMain.SendKeys(stateMain);
-            TextfoneMain.SendKeys(foneMain);
-            TextmobileMain.SendKeys(mobileMain);
-        }
 
-        public void FillAddresBillingForm(string zipCodBilling, string addressBilling, string numberBilling, string cityBilling, string stateBilling, string foneBilling, string mobileBilling)
+        public void FillAddressBillingForm(Address address)
         {
-            TextZipCodeBilling.SendKeys(zipCodBilling);
-            TextAdmAdresBilling.SendKeys(addressBilling);
-            TextAddNumberBilling.SendKeys(numberBilling);
-            TextAddCityBilling.SendKeys(cityBilling);
-            TextAddStateBilling.SendKeys(stateBilling);
-            TextAddPhoneBilling.SendKeys(foneBilling);
-            TextAddMobileBilling.SendKeys(mobileBilling);
+            TextZipCodeBilling.SendKeys(address.getZipCode());
+            TextAdmAdresBilling.SendKeys(address.getStreet());
+            TextAddNumberBilling.SendKeys(address.getNumber());
+            TextAddCityBilling.SendKeys(address.getCity());
+            TextAddStateBilling.SendKeys(address.getState());
+            TextAddPhoneBilling.SendKeys(address.getPhoneNumber());
+            TextAddMobileBilling.SendKeys(address.getMobileNumber());
 
             btnSave.Click();
+        }
 
+        public void FillAddressMainForm(Address address)
+        {
+            TextzipCodMain.SendKeys(address.getZipCode());
+            TextaddressMain.SendKeys(address.getStreet());
+            TextNumberMain.SendKeys(address.getNumber());
+            TextcityMain.SendKeys(address.getCity());
+            TextstateMain.SendKeys(address.getState());
+            TextfoneMain.SendKeys(address.getPhoneNumber());
+            TextmobileMain.SendKeys(address.getMobileNumber());
+
+        }
+
+        public void VerifySuccessMessage()
+        {
+            string message = textMessage.Text;
+
+            string expected = message.Substring(0, 28);
+            Assert.AreEqual("Client inserted with success", expected);
+
+            driver.Quit();
         }
     }
 }

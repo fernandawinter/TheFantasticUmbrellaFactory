@@ -29,15 +29,12 @@ namespace TheFantasticUmbrellaFactory
 
         public NavBarPageObject Login(String userName, String password)
         {
-            //UserName
             TextLogin.SendKeys(userName);
 
-            //Password
             TextPassword.SendKeys(password);
 
-            //Click button
             btnLogin.Click();
-            System.Threading.Thread.Sleep(6000);
+            System.Threading.Thread.Sleep(30000);
             return new NavBarPageObject(driver);
         }
     }

@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace TheFantasticUmbrellaFactory
 {
-    public class FormPageObject
+    public class ClientsPageObject
     {
         private IWebDriver driver;
-        public FormPageObject(IWebDriver driver)
+        public ClientsPageObject(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
         }
 
         [FindsBy(How = How.Id, Using = "form_principal")]
-        public IWebElement Radiotype { get; set; }
+        public IWebElement RadioClientType { get; set; }
 
         [FindsBy(How = How.Id, Using = "promo_code")]
         public IWebElement TextPromoCode { get; set; }
@@ -41,24 +41,79 @@ namespace TheFantasticUmbrellaFactory
         [FindsBy(How = How.Id, Using = "next")]
         public IWebElement BtnNext { get; set; }
 
+        public bool isPerson()
+        {
+            if (driver.FindElement(By.Id("person")).Selected)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public AddressPageObject fillForm(string clientType, string promoCode, string name, string email, string birthDate, string gender, string maritalStatus)
         {
+            TextName.SendKeys(name);
+            TextEmail.SendKeys(email);
+
             if (clientType == "Person")
             {
-                Radiotype.FindElement(By.XPath("//label[text()=" + "'" + clientType + "']")).Click();
+                RadioClientType.FindElement(By.XPath("//label[text()="+"'" +clientType+ "']")).Click();
                 TextPromoCode.SendKeys(promoCode);
-                TextName.SendKeys(name);
-                TextEmail.SendKeys(email);
                 TextBirthDate.SendKeys(birthDate);
                 SelectGender.SendKeys(gender);
-                SelectGender.FindElement(By.XPath("//select/option[text()=" + "'" + maritalStatus + "'" + "]")).Click();
+                SelectGender.FindElement(By.XPath("//select/option[text()="+"'" +maritalStatus+ "'"+"]")).Click();
                 BtnNext.Click();
                 return new AddressPageObject(driver);
             }
-            Radiotype.FindElement(By.XPath("//label[text()=" + "'" + clientType + "']")).Click();
+            RadioClientType.FindElement(By.XPath("//label[text()="+"'" +clientType+ "']")).Click();
             TextPromoCode.SendKeys(promoCode);
+            BtnNext.Click();
+            return new AddressPageObject(driver);
+        }
+
+        public void preencherClientType(String clientType)
+        {
+            RadioClientType.FindElement(By.XPath("//label[text()="+"'" +clientType+ "']")).Click();
+        }
+
+        public void preencherPromoCode()
+        {
+            if (isPerson())
+                TextPromoCode.SendKeys(Utils.GerarCpf());
+            else
+                TextPromoCode.SendKeys(Utils.GeraCNPJ());
+        }
+
+        public void preencherName(String name)
+        {
             TextName.SendKeys(name);
+        }
+
+        public void preencherEmail(String email)
+        {
             TextEmail.SendKeys(email);
+        }
+
+        public void preencherBirthDate(String birthDate)
+        {
+            if (isPerson())
+                TextBirthDate.SendKeys(birthDate);
+        }
+
+        public void preencherGender(String gender)
+        {
+            if (isPerson())
+                SelectGender.SendKeys(gender);
+        }
+
+        public void preencherMaritalStatus(String maritalStatus)
+        {
+            if (isPerson())
+                SelectGender.FindElement(By.XPath("//select/option[text()="+"'" +maritalStatus+ "'"+"]")).Click();
+        }
+
+        public AddressPageObject ApertaBtnNext()
+        {
             BtnNext.Click();
             return new AddressPageObject(driver);
         }

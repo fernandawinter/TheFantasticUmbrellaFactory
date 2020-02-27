@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -17,25 +18,129 @@ namespace TheFantasticUmbrellaFactory
             ChromeOptions options = new ChromeOptions();
 
             options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+
             ChromeDriver driver = new ChromeDriver(options);
+
             driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+
+            driver.Manage().Timeouts().ImplicitWait.TotalSeconds.Equals(60);
+
             HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
+
             NavBarPageObject navBarPageObject = hearderPageObject.Login("paul", "paul");
 
-            FormPageObject formPageObject = navBarPageObject.ClickInsert();
+            ClientsPageObject formPageObject = navBarPageObject.clickInsert();
 
-            AddressPageObject addressPageObject = formPageObject.fillForm("Person", CpfUtils.GerarCpf(), "Fernanda", "fernanda@fernanda.com", "23081995", "Female", "not Facebook official");
+            formPageObject.preencherClientType("Person");
+            formPageObject.preencherPromoCode();
+            formPageObject.preencherEmail("fernanda@company.com");
+            formPageObject.preencherName("Fernanda Company");
+            formPageObject.preencherBirthDate("23081995");
+            formPageObject.preencherGender("Female");
+            formPageObject.preencherMaritalStatus("not Facebook official");
 
-            addressPageObject.FillAddresMainForm("51515", "Rua A", "51", "Porto Alegre", "CA", "51991353795", "33224574");
+            AddressPageObject addressPageObject = formPageObject.ApertaBtnNext();
 
-            addressPageObject.FillAddresBillingForm("51515", "Rua A", "51", "Porto Alegre", "CA", "51991353795", "33224574");
+            Address address = new Address();
 
-            string messege = driver.FindElementById("message").Text;
+            addressPageObject.FillAddressMainForm(address);
 
-            string expected = messege.Substring(0, messege.Length - 3);
-            Assert.AreEqual("Client inserted with success,", expected);
+            addressPageObject.FillAddressBillingForm(address);
 
-            driver.Quit();
+            addressPageObject.VerifySuccessMessage();
+        }
+
+        [TestMethod]
+        public void TestPromoCodeCompany()
+        {
+            ChromeOptions options = new ChromeOptions();
+
+            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+
+            ChromeDriver driver = new ChromeDriver(options);
+
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+
+            HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
+
+
+            NavBarPageObject navBarPageObject = hearderPageObject.Login("paul", "paul");
+
+            ClientsPageObject formPageObject = navBarPageObject.clickInsert();
+
+            formPageObject.preencherClientType("Company");
+            formPageObject.preencherPromoCode();
+            formPageObject.preencherEmail("fernanda@company.com");
+            formPageObject.preencherName("Fernanda Company");
+
+            AddressPageObject addressPageObject = formPageObject.ApertaBtnNext();
+
+            Address address = new Address();
+
+            addressPageObject.FillAddressMainForm(address);
+
+            addressPageObject.FillAddressBillingForm(address);
+
+            addressPageObject.VerifySuccessMessage();
+        }
+
+        [TestMethod]
+        public void TestPromoCodeCompanyCNPJInvalido()
+        {
+            ChromeOptions options = new ChromeOptions();
+            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+            ChromeDriver driver = new ChromeDriver(options);
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+
+            HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
+
+            NavBarPageObject navBarPageObject = hearderPageObject.Login("paul", "paul");
+
+            ClientsPageObject formPageObject = navBarPageObject.clickInsert();
+
+            formPageObject.preencherClientType("Company");
+            formPageObject.TextPromoCode.SendKeys("00000000");
+            driver.FindElement(By.Id("name_companyname")).Click();
+            IAlert alert = driver.SwitchTo().Alert();
+            if (alert != null)
+            {
+                string alertText = alert.Text;
+                Assert.AreEqual("Invalid Promotional Code", alertText);
+                alert.Accept();
+                driver.Quit();
+            }
+        }
+
+        [TestMethod]
+        public void TestPromoCodePersonCPFInvalido()
+        {
+            ChromeOptions options = new ChromeOptions();
+
+            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+
+            ChromeDriver driver = new ChromeDriver(options);
+
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+
+            driver.Manage().Timeouts().ImplicitWait.TotalSeconds.Equals(60);
+
+            HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
+
+            NavBarPageObject navBarPageObject = hearderPageObject.Login("paul", "paul");
+
+            ClientsPageObject formPageObject = navBarPageObject.clickInsert();
+
+            formPageObject.preencherClientType("Person");
+            formPageObject.TextPromoCode.SendKeys("00000000");
+            driver.FindElement(By.Id("name_companyname")).Click();
+            IAlert alert = driver.SwitchTo().Alert();
+            if (alert != null)
+            {
+                string alertText = alert.Text;
+                Assert.AreEqual("Invalid Promotional Code", alertText);
+                alert.Accept();
+                driver.Quit();
+            }
         }
     }
 }
