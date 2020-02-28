@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +21,17 @@ namespace TheFantasticUmbrellaFactory
 
             options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
 
-            ChromeDriver driver = new ChromeDriver(options);
+            ChromeDriver driver = new ChromeDriver(/*options*/);
 
-            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%202/index.html";
 
             driver.Manage().Timeouts().ImplicitWait.TotalSeconds.Equals(60);
 
-            HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
+            HeaderPageObject headerPageObject = new HeaderPageObject(driver);
 
-            NavBarPageObject navBarPageObject = hearderPageObject.Login("paul", "paul");
+            NavBarPageObject navBarPageObject = headerPageObject.Login("paul", "paul");
+
+            
 
             ClientsPageObject formPageObject = navBarPageObject.clickInsert();
 

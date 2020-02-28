@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace TheFantasticUmbrellaFactory
             TextPassword.SendKeys(password);
 
             btnLogin.Click();
-            System.Threading.Thread.Sleep(30000);
+            System.Threading.Thread.Sleep(6000);
             return new NavBarPageObject(driver);
         }
     }
