@@ -35,7 +35,7 @@ namespace TheFantasticUmbrellaFactory
             TextPassword.SendKeys(password);
 
             btnLogin.Click();
-            System.Threading.Thread.Sleep(6000);
+            System.Threading.Thread.Sleep(1000);
             return new NavBarPageObject(driver);
         }
     }

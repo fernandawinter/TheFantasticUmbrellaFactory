@@ -19,9 +19,9 @@ namespace TheFantasticUmbrellaFactory
         {
             ChromeOptions options = new ChromeOptions();
 
-            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+            options.AddArguments("--user-data-dir=C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data");
 
-            ChromeDriver driver = new ChromeDriver(/*options*/);
+            ChromeDriver driver = new ChromeDriver(options);
 
             driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%202/index.html";
 
@@ -59,11 +59,11 @@ namespace TheFantasticUmbrellaFactory
         {
             ChromeOptions options = new ChromeOptions();
 
-            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+            options.AddArguments("--user-data-dir=C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
 
             ChromeDriver driver = new ChromeDriver(options);
 
-            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%202/index.html";
 
             HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
 
@@ -92,9 +92,9 @@ namespace TheFantasticUmbrellaFactory
         public void TestPromoCodeCompanyCNPJInvalido()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+            options.AddArguments("--user-data-dir=C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
             ChromeDriver driver = new ChromeDriver(options);
-            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%202/index.html";
 
             HeaderPageObject hearderPageObject = new HeaderPageObject(driver);
 
@@ -120,11 +120,11 @@ namespace TheFantasticUmbrellaFactory
         {
             ChromeOptions options = new ChromeOptions();
 
-            options.AddArguments("C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
+            options.AddArguments("--user-data-dir=C:/Users/fernanda.winter/AppData/Local/Google/Chrome/User Data/");
 
             ChromeDriver driver = new ChromeDriver(options);
 
-            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%201/index.html";
+            driver.Url = "file:///C:/Users/fernanda.winter/Desktop/Version%202/index.html";
 
             driver.Manage().Timeouts().ImplicitWait.TotalSeconds.Equals(60);
 

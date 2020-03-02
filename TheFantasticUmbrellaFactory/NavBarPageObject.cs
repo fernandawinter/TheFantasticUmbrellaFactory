@@ -13,7 +13,7 @@ namespace TheFantasticUmbrellaFactory
             PageFactory.InitElements(driver, this);
         }
 
-        [FindsBy(How = How.XPath, Using = "//li/a[text()]='Clients'")]
+        [FindsBy(How = How.XPath, Using = "/html/body/section/nav/ul/li[1]")]
         public IWebElement BtnClients { get; set; }
 
         [FindsBy(How = How.CssSelector, Using = "[href = 'insertclient_identification.html']")]
